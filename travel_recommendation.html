@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Explorer | Travel Recommendations</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f6;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    nav {
+      background: #12372a;
+      color: white;
+      padding: 14px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      color: #b8f3d1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #8de0b2;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .search-box input {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      min-width: 180px;
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .search-btn {
+      background: #16a36a;
+      color: white;
+    }
+
+    .clear-btn {
+      background: #e6e6e6;
+      color: #222;
+    }
+
+    .hero {
+      min-height: 68vh;
+      padding: 75px 8%;
+      color: white;
+      background:
+        linear-gradient(rgba(0, 0, 0, .58), rgba(0, 0, 0, .58)),
+        url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=80")
+        center/cover no-repeat;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      max-width: 750px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      max-width: 650px;
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      background: #16a36a;
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    section.content-section {
+      padding: 45px 6%;
+      min-height: 60vh;
+    }
+
+    .section-title {
+      text-align: center;
+      color: #12372a;
+      margin-bottom: 25px;
+      font-size: 32px;
+    }
+
+    .intro {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 30px;
+    }
+
+    .team-grid, #results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 22px;
+    }
+
+    .team-card, .result-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, .12);
+    }
+
+    .team-card {
+      padding: 22px;
+      text-align: center;
+    }
+
+    .result-card img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .result-info {
+      padding: 17px;
+    }
+
+    .result-info h3 {
+      color: #12372a;
+      margin-bottom: 8px;
+    }
+
+    .result-info p {
+      margin-bottom: 10px;
+    }
+
+    .contact-layout {
+      max-width: 650px;
+      margin: auto;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 14px;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, .1);
+    }
+
+    .contact-form label {
+      font-weight: bold;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #bbb;
+      border-radius: 5px;
+      font: inherit;
+    }
+
+    .contact-form textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .status-message {
+      text-align: center;
+      margin: 15px 0;
+      font-weight: bold;
+    }
+
+    #results-section {
+      padding-top: 25px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    footer {
+      text-align: center;
+      padding: 22px;
+      background: #12372a;
+      color: white;
+    }
+
+    @media (max-width: 700px) {
+      nav {
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      .search-box input {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .hero {
+        padding: 55px 6%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="brand">Travel Explorer</div>
+
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact Us</a>
+    </div>
+
+    <form class="search-box" id="searchForm">
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Search beach, temple, country..."
+        aria-label="Search travel recommendations"
+      >
+      <button class="search-btn" type="submit">Search</button>
+      <button class="clear-btn" type="button" id="clearBtn">Clear</button>
+    </form>
+  </nav>
+
+  <main>
+    <section class="hero" id="home">
+      <h1>Discover the World, One Journey at a Time</h1>
+      <p>
+        Find beautiful beaches, explore historic temples, and discover
+        amazing countries. Let Travel Explorer help you plan your next
+        unforgettable adventure.
+      </p>
+      <a class="primary-btn" href="#results-section">Explore Destinations</a>
+    </section>
+
+    <section class="content-section" id="results-section">
+      <h2 class="section-title">Travel Recommendations</h2>
+      <p class="intro" id="resultsMessage">
+        Search for beach, temple, or country to discover your next destination.
+      </p>
+      <div id="results" aria-live="polite"></div>
+    </section>
+
+    <section class="content-section" id="about">
+      <h2 class="section-title">About Us</h2>
+      <p class="intro">
+        Travel Explorer helps travelers discover exciting destinations
+        around the world. Our mission is to make travel inspiration simple,
+        accessible, and enjoyable by bringing destination ideas together
+        in one place.
+      </p>
+
+      <h2 class="section-title">Meet Our Team</h2>
+      <div class="team-grid">
+        <article class="team-card">
+          <h3>Ahmed Ali</h3>
+          <p><strong>Founder & CEO</strong></p>
+          <p>Leads our vision to make discovering destinations easier.</p>
+        </article>
+
+        <article class="team-card">
+          <h3>Fatima Hassan</h3>
+          <p><strong>Travel Researcher</strong></p>
+          <p>Finds inspiring destinations and travel experiences.</p>
+        </article>
+
+        <article class="team-card">
+          <h3>Mohamed Yusuf</h3>
+          <p><strong>Web Developer</strong></p>
+          <p>Builds and maintains our travel recommendation website.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section" id="contact">
+      <h2 class="section-title">Contact Us</h2>
+      <p class="intro">
+        Have a question or need help finding a destination? Send us a message.
+      </p>
+
+      <div class="contact-layout">
+        <form class="contact-form" id="contactForm">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+
+          <button class="search-btn" type="submit">Submit Message</button>
+          <p id="contactStatus" class="status-message" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Travel Explorer. Explore responsibly.</p>
+  </footer>
+
+  <script src="travel_recommendation.js"></script>
+</body>
+</html>
